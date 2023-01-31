@@ -5,10 +5,7 @@ import GithubProvider from 'next-auth/providers/github';
 
 let useMockProvider = process.env.NODE_ENV === 'test';
 const { GITHUB_CLIENT_ID, GITHUB_SECRET, NODE_ENV, APP_ENV } = process.env;
-if (
-  (NODE_ENV !== 'production' || APP_ENV === 'test') &&
-  (!GITHUB_CLIENT_ID || !GITHUB_SECRET)
-) {
+if ((NODE_ENV !== 'production' || APP_ENV === 'test') && (!GITHUB_CLIENT_ID || !GITHUB_SECRET)) {
   console.log('⚠️ Using mocked GitHub auth correct credentials were not added');
   useMockProvider = true;
 }
@@ -32,7 +29,7 @@ if (useMockProvider) {
       credentials: {
         name: { type: 'test' },
       },
-    }),
+    })
   );
 } else {
   if (!GITHUB_CLIENT_ID || !GITHUB_SECRET) {
@@ -50,7 +47,7 @@ if (useMockProvider) {
           image: profile.avatar_url,
         } as any;
       },
-    }),
+    })
   );
 }
 export default NextAuth({

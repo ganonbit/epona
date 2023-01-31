@@ -17,10 +17,7 @@ declare interface MyEventEmitter {
   on<TEv extends keyof MyEvents>(event: TEv, listener: MyEvents[TEv]): this;
   off<TEv extends keyof MyEvents>(event: TEv, listener: MyEvents[TEv]): this;
   once<TEv extends keyof MyEvents>(event: TEv, listener: MyEvents[TEv]): this;
-  emit<TEv extends keyof MyEvents>(
-    event: TEv,
-    ...args: Parameters<MyEvents[TEv]>
-  ): boolean;
+  emit<TEv extends keyof MyEvents>(event: TEv, ...args: Parameters<MyEvents[TEv]>): boolean;
 }
 
 class MyEventEmitter extends EventEmitter {}
@@ -29,8 +26,7 @@ class MyEventEmitter extends EventEmitter {}
 const ee = new MyEventEmitter();
 
 // who is currently typing, key is `name`
-const currentlyTyping: Record<string, { lastTyped: Date }> =
-  Object.create(null);
+const currentlyTyping: Record<string, { lastTyped: Date }> = Object.create(null);
 
 // every 1s, clear old "isTyping"
 const interval = setInterval(() => {
@@ -54,7 +50,7 @@ export const postRouter = router({
       z.object({
         id: z.string().uuid().optional(),
         text: z.string().min(1),
-      }),
+      })
     )
     .mutation(async ({ input, ctx }) => {
       const { name } = ctx.user;
@@ -71,26 +67,24 @@ export const postRouter = router({
       return post;
     }),
 
-  isTyping: authedProcedure
-    .input(z.object({ typing: z.boolean() }))
-    .mutation(({ input, ctx }) => {
-      const { name } = ctx.user;
-      if (!input.typing) {
-        delete currentlyTyping[name];
-      } else {
-        currentlyTyping[name] = {
-          lastTyped: new Date(),
-        };
-      }
-      ee.emit('isTypingUpdate');
-    }),
+  isTyping: authedProcedure.input(z.object({ typing: z.boolean() })).mutation(({ input, ctx }) => {
+    const { name } = ctx.user;
+    if (!input.typing) {
+      delete currentlyTyping[name];
+    } else {
+      currentlyTyping[name] = {
+        lastTyped: new Date(),
+      };
+    }
+    ee.emit('isTypingUpdate');
+  }),
 
   infinite: publicProcedure
     .input(
       z.object({
         cursor: z.date().nullish(),
         take: z.number().min(1).max(50).nullish(),
-      }),
+      })
     )
     .query(async ({ input }) => {
       const take = input.take ?? 10;

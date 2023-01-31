@@ -1,8 +1,8 @@
-import { trpc } from '../utils/trpc';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { trpc } from '../utils/trpc';
 
 function AddMessageForm({ onMessagePost }: { onMessagePost: () => void }) {
   const addPost = trpc.post.add.useMutation();
@@ -25,22 +25,15 @@ function AddMessageForm({ onMessagePost }: { onMessagePost: () => void }) {
   const userName = session?.user?.name;
   if (!userName) {
     return (
-      <div className="flex justify-between w-full px-3 py-2 text-lg text-gray-200 bg-gray-800 rounded">
-        <p className="font-bold">
+      <div className='flex justify-between w-full px-3 py-2 text-lg text-gray-200 bg-gray-800 rounded'>
+        <p className='font-bold'>
           You have to{' '}
-          <button
-            className="inline font-bold underline"
-            onClick={() => signIn()}
-          >
+          <button className='inline font-bold underline' onClick={() => signIn()}>
             sign in
           </button>{' '}
           to write.
         </p>
-        <button
-          onClick={() => signIn()}
-          data-testid="signin"
-          className="h-full px-4 bg-indigo-500 rounded"
-        >
+        <button onClick={() => signIn()} data-testid='signin' className='h-full px-4 bg-indigo-500 rounded'>
           Sign In
         </button>
       </div>
@@ -59,15 +52,15 @@ function AddMessageForm({ onMessagePost }: { onMessagePost: () => void }) {
           await postMessage();
         }}
       >
-        <fieldset disabled={addPost.isLoading} className="min-w-0">
-          <div className="flex items-end w-full px-3 py-2 text-lg text-gray-200 bg-gray-500 rounded">
+        <fieldset disabled={addPost.isLoading} className='min-w-0'>
+          <div className='flex items-end w-full px-3 py-2 text-lg text-gray-200 bg-gray-500 rounded'>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="flex-1 bg-transparent outline-0"
+              className='flex-1 bg-transparent outline-0'
               rows={message.split(/\r|\n/).length}
-              id="text"
-              name="text"
+              id='text'
+              name='text'
               autoFocus
               onKeyDown={async (e) => {
                 if (e.key === 'Shift') {
@@ -89,30 +82,27 @@ function AddMessageForm({ onMessagePost }: { onMessagePost: () => void }) {
               }}
             />
             <div>
-              <button type="submit" className="px-4 py-1 bg-indigo-500 rounded">
+              <button type='submit' className='px-4 py-1 bg-indigo-500 rounded'>
                 Submit
               </button>
             </div>
           </div>
         </fieldset>
-        {addPost.error && (
-          <p style={{ color: 'red' }}>{addPost.error.message}</p>
-        )}
+        {addPost.error && <p style={{ color: 'red' }}>{addPost.error.message}</p>}
       </form>
     </>
   );
 }
 
-export default function IndexPage() {
+export default function IndexPage(props) {
   const postsQuery = trpc.post.infinite.useInfiniteQuery(
     {},
     {
       getPreviousPageParam: (d) => d.prevCursor,
-    },
+    }
   );
   const utils = trpc.useContext();
-  const { hasPreviousPage, isFetchingPreviousPage, fetchPreviousPage } =
-    postsQuery;
+  const { hasPreviousPage, isFetchingPreviousPage, fetchPreviousPage } = postsQuery;
 
   // list of messages that are rendered
   const [messages, setMessages] = useState(() => {
@@ -134,9 +124,7 @@ export default function IndexPage() {
       for (const msg of incoming ?? []) {
         map[msg.id] = msg;
       }
-      return Object.values(map).sort(
-        (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
-      );
+      return Object.values(map).sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
     });
   }, []);
 
@@ -183,55 +171,46 @@ export default function IndexPage() {
     <>
       <Head>
         <title>Prisma Starter</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className="flex flex-col h-screen md:flex-row">
-        <section className="flex flex-col w-full bg-gray-800 md:w-72">
-          <div className="flex-1 overflow-y-hidden">
-            <div className="flex flex-col h-full divide-y divide-gray-700">
-              <header className="p-4">
-                <h1 className="text-3xl font-bold text-gray-50">
-                  tRPC WebSocket starter
-                </h1>
-                <p className="text-sm text-gray-400">
+      <div className='flex flex-col h-screen md:flex-row'>
+        <section className='flex flex-col w-full bg-gray-800 md:w-72'>
+          <div className='flex-1 overflow-y-hidden'>
+            <div className='flex flex-col h-full divide-y divide-gray-700'>
+              <header className='p-4'>
+                <h1 className='text-3xl font-bold text-gray-50'>tRPC WebSocket starter</h1>
+                <p className='text-sm text-gray-400'>
                   Showcases WebSocket + subscription support
                   <br />
                   <a
-                    className="text-gray-100 underline"
-                    href="https://github.com/trpc/examples-next-prisma-starter-websockets"
-                    target="_blank"
-                    rel="noreferrer"
+                    className='text-gray-100 underline'
+                    href='https://github.com/trpc/examples-next-prisma-starter-websockets'
+                    target='_blank'
+                    rel='noreferrer'
                   >
                     View Source on GitHub
                   </a>
                 </p>
               </header>
-              <div className="flex-1 hidden p-4 space-y-6 overflow-y-auto text-gray-400 md:block">
-                <article className="space-y-2">
-                  <h2 className="text-lg text-gray-200">Introduction</h2>
-                  <ul className="space-y-2 list-disc list-inside">
+              <div className='flex-1 hidden p-4 space-y-6 overflow-y-auto text-gray-400 md:block'>
+                <article className='space-y-2'>
+                  <h2 className='text-lg text-gray-200'>Introduction</h2>
+                  <ul className='space-y-2 list-disc list-inside'>
                     <li>Open inspector and head to Network tab</li>
                     <li>All client requests are handled through WebSockets</li>
                     <li>
-                      We have a simple backend subscription on new messages that
-                      adds the newly added message to the current state
+                      We have a simple backend subscription on new messages that adds the newly added message to the
+                      current state
                     </li>
                   </ul>
                 </article>
                 {userName && (
                   <article>
-                    <h2 className="text-lg text-gray-200">User information</h2>
-                    <ul className="space-y-2">
-                      <li className="text-lg">
+                    <h2 className='text-lg text-gray-200'>User information</h2>
+                    <ul className='space-y-2'>
+                      <li className='text-lg'>
                         You&apos;re{' '}
-                        <input
-                          id="name"
-                          name="name"
-                          type="text"
-                          disabled
-                          className="bg-transparent"
-                          value={userName}
-                        />
+                        <input id='name' name='name' type='text' disabled className='bg-transparent' value={userName} />
                       </li>
                       <li>
                         <button onClick={() => signOut()}>Sign Out</button>
@@ -242,66 +221,54 @@ export default function IndexPage() {
               </div>
             </div>
           </div>
-          <div className="flex-shrink-0 hidden h-16 md:block"></div>
+          <div className='flex-shrink-0 hidden h-16 md:block'></div>
         </section>
-        <div className="flex-1 overflow-y-hidden md:h-screen">
-          <section className="flex flex-col justify-end h-full p-4 space-y-4 bg-gray-700">
-            <div className="space-y-4 overflow-y-auto">
+        <div className='flex-1 overflow-y-hidden md:h-screen'>
+          <section className='flex flex-col justify-end h-full p-4 space-y-4 bg-gray-700'>
+            <div className='space-y-4 overflow-y-auto'>
               <button
-                data-testid="loadMore"
+                data-testid='loadMore'
                 onClick={() => fetchPreviousPage()}
                 disabled={!hasPreviousPage || isFetchingPreviousPage}
-                className="px-4 py-2 text-white bg-indigo-500 rounded disabled:opacity-40"
+                className='px-4 py-2 text-white bg-indigo-500 rounded disabled:opacity-40'
               >
-                {isFetchingPreviousPage
-                  ? 'Loading more...'
-                  : hasPreviousPage
-                  ? 'Load More'
-                  : 'Nothing more to load'}
+                {isFetchingPreviousPage ? 'Loading more...' : hasPreviousPage ? 'Load More' : 'Nothing more to load'}
               </button>
-              <div className="space-y-4">
+              <div className='space-y-4'>
                 {messages?.map((item) => (
-                  <article key={item.id} className=" text-gray-50">
-                    <header className="flex space-x-2 text-sm">
-                      <h3 className="text-md">
+                  <article key={item.id} className=' text-gray-50'>
+                    <header className='flex space-x-2 text-sm'>
+                      <h3 className='text-md'>
                         {item.source === 'RAW' ? (
                           item.name
                         ) : (
-                          <a
-                            href={`https://github.com/${item.name}`}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
+                          <a href={`https://github.com/${item.name}`} target='_blank' rel='noreferrer'>
                             {item.name}
                           </a>
                         )}
                       </h3>
-                      <span className="text-gray-500">
+                      <span className='text-gray-500'>
                         {new Intl.DateTimeFormat('en-GB', {
                           dateStyle: 'short',
                           timeStyle: 'short',
                         }).format(item.createdAt)}
                       </span>
                     </header>
-                    <p className="text-xl leading-tight whitespace-pre-line">
-                      {item.text}
-                    </p>
+                    <p className='text-xl leading-tight whitespace-pre-line'>{item.text}</p>
                   </article>
                 ))}
                 <div ref={scrollTargetRef}></div>
               </div>
             </div>
-            <div className="w-full">
+            <div className='w-full'>
               <AddMessageForm onMessagePost={() => scrollToBottomOfList()} />
-              <p className="h-2 italic text-gray-400">
-                {currentlyTyping.length
-                  ? `${currentlyTyping.join(', ')} typing...`
-                  : ''}
+              <p className='h-2 italic text-gray-400'>
+                {currentlyTyping.length ? `${currentlyTyping.join(', ')} typing...` : ''}
               </p>
             </div>
 
             {process.env.NODE_ENV !== 'production' && (
-              <div className="hidden md:block">
+              <div className='hidden md:block'>
                 <ReactQueryDevtools initialIsOpen={false} />
               </div>
             )}
