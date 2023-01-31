@@ -21,8 +21,6 @@ services:
           name: epona-db
           property: connectionString
 
-      - fromGroup: epona
-
 databases:
   - name: epona-db
     plan: free
