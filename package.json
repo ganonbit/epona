@@ -42,16 +42,6 @@
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   },
-  "prettier": {
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "jsxSingleQuote": true,
-    "printWidth": 120,
-    "tabWidth": 2,
-    "endOfLine": "auto",
-    "arrowParens": "always"
-  },
   "dependencies": {
     "@prisma/client": "^4.7.1",
     "@tanstack/react-query": "^4.3.8",
