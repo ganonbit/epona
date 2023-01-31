@@ -1,11 +1,12 @@
 {
-  "name": "@examples/next-websockets-starter",
-  "version": "10.9.0",
+  "name": "epona",
+  "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "^18.0.0"
+    "node": "^19.0.0",
+    "pnpm": "^7.0.0"
   },
-  "packageManager": "pnpm@7.18.2",
+  "packageManager": "pnpm@7.26.2",
   "scripts": {
     "build:1-generate": "prisma generate",
     "build:2-next": "cross-env NODE_ENV=production next build",
@@ -42,9 +43,14 @@
     "seed": "tsx prisma/seed.ts"
   },
   "prettier": {
-    "printWidth": 80,
-    "trailingComma": "all",
-    "singleQuote": true
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "jsxSingleQuote": true,
+    "printWidth": 120,
+    "tabWidth": 2,
+    "endOfLine": "auto",
+    "arrowParens": "always"
   },
   "dependencies": {
     "@prisma/client": "^4.7.1",
