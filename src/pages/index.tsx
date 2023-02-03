@@ -94,8 +94,7 @@ function AddMessageForm({ onMessagePost }: { onMessagePost: () => void }) {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function IndexPage(props) {
+export default function IndexPage() {
   const postsQuery = trpc.post.infinite.useInfiniteQuery(
     {},
     {
